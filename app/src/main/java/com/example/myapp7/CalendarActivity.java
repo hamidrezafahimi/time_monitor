@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.graphics.Color;
 import android.widget.Toast;
-import com.example.myapp7.R;  // Import the generated R class
+import com.example.myapp7.R;  // Ensure R is imported
 
 public class CalendarActivity extends Activity {
 
@@ -74,6 +76,10 @@ public class CalendarActivity extends Activity {
         // Clear previous rows
         calendarTable.removeAllViews();
 
+        // Set a fixed cell width (e.g., 48dp)
+        int cellWidth = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                48, getResources().getDisplayMetrics());
+
         // Header row with day names: Sat, Sun, Mon, Tue, Wed, Thu, Fri
         TableRow headerRow = new TableRow(this);
         String[] dayNames = {"Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"};
@@ -82,7 +88,9 @@ public class CalendarActivity extends Activity {
             tv.setText(dayName);
             tv.setTextColor(Color.parseColor("#FFFF00"));
             tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
-            tv.setPadding(16, 16, 16, 16);
+            tv.setPadding(8, 8, 8, 8);
+            tv.setLayoutParams(new TableRow.LayoutParams(cellWidth,
+                    TableRow.LayoutParams.WRAP_CONTENT));
             headerRow.addView(tv);
         }
         calendarTable.addView(headerRow);
@@ -101,7 +109,9 @@ public class CalendarActivity extends Activity {
                     // Empty cell
                     TextView emptyCell = new TextView(this);
                     emptyCell.setText("");
-                    emptyCell.setPadding(16, 16, 16, 16);
+                    emptyCell.setPadding(8, 8, 8, 8);
+                    emptyCell.setLayoutParams(new TableRow.LayoutParams(cellWidth,
+                            TableRow.LayoutParams.WRAP_CONTENT));
                     row.addView(emptyCell);
                 } else {
                     // Day button
@@ -115,6 +125,8 @@ public class CalendarActivity extends Activity {
                     } else {
                         dayButton.setTextColor(Color.parseColor("#FFFF00"));
                     }
+                    dayButton.setLayoutParams(new TableRow.LayoutParams(cellWidth,
+                            TableRow.LayoutParams.WRAP_CONTENT));
                     final int selectedDay = dayCounter;
                     dayButton.setOnClickListener(v -> {
                         Intent intent = new Intent(CalendarActivity.this, DayActivity.class);

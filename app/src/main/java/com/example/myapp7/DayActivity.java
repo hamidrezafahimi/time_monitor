@@ -2,23 +2,27 @@ package com.example.myapp7;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.os.Build;
+import android.os.Environment;
+import android.provider.Settings;
 import android.widget.EditText;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.Manifest;
 import android.util.Log;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import com.example.myapp7.R;  // Import the generated R class
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import android.os.Environment;
-import com.example.myapp7.R;  // Import the generated R class
 
 public class DayActivity extends Activity {
-    private static final int REQUEST_WRITE_STORAGE = 111;
+    private static final int REQUEST_MANAGE_EXTERNAL_STORAGE = 222;
+    private static final int REQUEST_WRITE_STORAGE = 111;  // fallback for older devices
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +38,22 @@ public class DayActivity extends Activity {
         EditText noteField = findViewById(R.id.note_field);
         Button saveButton = findViewById(R.id.button_save);
 
-        // Check for external storage write permission
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                    REQUEST_WRITE_STORAGE);
+        // For Android 11+ (API 30+), request MANAGE_EXTERNAL_STORAGE if needed.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (!Environment.isExternalStorageManager()) {
+                Toast.makeText(this, "Please grant all files access permission", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                startActivityForResult(intent, REQUEST_MANAGE_EXTERNAL_STORAGE);
+                // Note: The user must manually grant this permission in system settings.
+            }
+        } else {
+            // For older versions, request WRITE_EXTERNAL_STORAGE permission
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        REQUEST_WRITE_STORAGE);
+            }
         }
 
         saveButton.setOnClickListener(v -> {
@@ -51,9 +65,8 @@ public class DayActivity extends Activity {
             // Format entry
             String entry = "Month " + month + " - Day " + day + "\n" + note + "\n---\n";
             try {
-                // Get external storage directory
+                // Write file to a public directory using the app label as folder name.
                 File rootDir = Environment.getExternalStorageDirectory();
-                // Use the app's label as the folder name (will change if you change the app name)
                 String appLabel = getApplicationInfo().loadLabel(getPackageManager()).toString();
                 File appFolder = new File(rootDir, appLabel);
                 if (!appFolder.exists() && !appFolder.mkdirs()) {
