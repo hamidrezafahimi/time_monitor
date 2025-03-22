@@ -7,32 +7,17 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:allowBackup="true"
         android:label="@string/app_name"
         android:theme="@style/Theme.MyApp">
-
-        <!-- HomeActivity is now the launcher -->
-        <activity
-            android:name=".HomeActivity"
-            android:exported="true">
+        <activity android:name=".HomeActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <!-- Existing CalendarActivity and DayActivity -->
-        <activity
-            android:name=".CalendarActivity"
-            android:exported="false" />
-        <activity
-            android:name=".DayActivity"
-            android:exported="false" />
-
-        <!-- New ThingsActivity -->
-        <activity
-            android:name=".ThingsActivity"
-            android:exported="false" />
-
+        <activity android:name=".CalendarActivity" android:exported="false" />
+        <activity android:name=".ThingsActivity" android:exported="false" />
+        <activity android:name=".ReportActivity" android:exported="false" />
+        <activity android:name=".SummaryActivity" android:exported="false" />
     </application>
 </manifest>

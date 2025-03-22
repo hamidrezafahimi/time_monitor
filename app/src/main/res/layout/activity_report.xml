@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#000000">
+
+    <!-- Top half: Calendar view -->
+    <LinearLayout
+        android:id="@+id/report_top_half"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+        
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+            <Button
+                android:id="@+id/report_button_prev"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Prev"
+                android:textColor="#FFFF00"
+                android:background="@android:color/darker_gray"
+                android:layout_margin="8dp"/>
+            <TextView
+                android:id="@+id/report_month_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Month 1"
+                android:textColor="#FFFF00"
+                android:textSize="20sp"
+                android:padding="8dp"/>
+            <Button
+                android:id="@+id/report_button_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Next"
+                android:textColor="#FFFF00"
+                android:background="@android:color/darker_gray"
+                android:layout_margin="8dp"/>
+        </LinearLayout>
+        
+        <TableLayout
+            android:id="@+id/report_calendar_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:stretchColumns="*"/>
+    </LinearLayout>
+
+    <!-- Bottom half: Things selection and Summarize button -->
+    <LinearLayout
+        android:id="@+id/report_bottom_half"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="16dp">
+        
+        <Button
+            android:id="@+id/report_button_select_things"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Things"
+            android:textColor="#FFFF00"
+            android:background="@android:color/darker_gray"
+            android:layout_marginBottom="8dp"/>
+        
+        <TextView
+            android:id="@+id/report_selected_things"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:padding="8dp"/>
+        
+        <Button
+            android:id="@+id/report_button_summarize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Summarize"
+            android:textColor="#FFFF00"
+            android:background="@android:color/darker_gray"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp"/>
+    </LinearLayout>
+</LinearLayout>
