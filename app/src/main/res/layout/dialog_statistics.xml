@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView 
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="wrap_content">
+  <LinearLayout 
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      android:padding="16dp"
+      android:background="#000000">
+      
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Start Time:" 
+          android:textColor="#FFFF00"/>
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+          <Spinner
+              android:id="@+id/spinner_start_hour"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"/>
+          <Spinner
+              android:id="@+id/spinner_start_minute"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="8dp"/>
+      </LinearLayout>
+      
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="End Time:" 
+          android:textColor="#FFFF00"
+          android:layout_marginTop="16dp"/>
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+          <Spinner
+              android:id="@+id/spinner_end_hour"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"/>
+          <Spinner
+              android:id="@+id/spinner_end_minute"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="8dp"/>
+      </LinearLayout>
+      
+      <TextView
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Duration:" 
+          android:textColor="#FFFF00"
+          android:layout_marginTop="16dp"/>
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+          <Spinner
+              android:id="@+id/spinner_duration_hour"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"/>
+          <Spinner
+              android:id="@+id/spinner_duration_minute"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="8dp"/>
+      </LinearLayout>
+      
+      <Button
+          android:id="@+id/button_save_stats"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Save"
+          android:textColor="#FFFF00"
+          android:background="@android:color/darker_gray"
+          android:layout_gravity="center_horizontal"
+          android:layout_marginTop="16dp"/>
+      
+      <Button
+          android:id="@+id/button_change_stats"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Change"
+          android:textColor="#FFFF00"
+          android:background="@android:color/darker_gray"
+          android:layout_gravity="center_horizontal"
+          android:layout_marginTop="8dp"/>
+      
+  </LinearLayout>
+</ScrollView>
