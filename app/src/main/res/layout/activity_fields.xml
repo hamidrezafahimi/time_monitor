@@ -1,47 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView 
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" 
+    xmlns:app="http://schemas.android.com/apk/res-auto" 
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_fields_layout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000">
-    <LinearLayout 
-        android:layout_width="match_parent"
+    tools:context=".FieldsActivity"
+    android:background="?attr/colorBackground">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/fieldsTitleText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:text="@string/fields_title"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"/>
 
-        <EditText
-            android:id="@+id/input_field"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Enter new field"
-            android:textColor="#FFFF00"
-            android:background="@android:color/darker_gray"
-            android:padding="8dp"/>
-
-        <Button
-            android:id="@+id/btn_add_field"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add Field"
-            android:textColor="#FFFF00"
-            android:background="@android:color/darker_gray"
-            android:layout_marginTop="8dp"/>
-
-        <Button
-            android:id="@+id/btn_report_fields"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Report"
-            android:textColor="#FFFF00"
-            android:background="@android:color/darker_gray"
-            android:layout_marginTop="8dp"/>
+    <!-- A list or set of fields (RecyclerView/LinearLayout, etc.) inside a card -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/fieldsCard"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="8dp"
+        app:layout_constraintTop_toBottomOf="@id/fieldsTitleText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
-            android:id="@+id/fields_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="16dp"/>
-    </LinearLayout>
-</ScrollView>
+            android:padding="16dp">
+
+            <!-- Example input field -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txtInputLayoutFieldName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/field_name">
+                
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/fieldNameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAddField"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/add_field"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_marginTop="16dp"/>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

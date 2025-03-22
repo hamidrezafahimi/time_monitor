@@ -1,91 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
+<androidx.constraintlayout.widget.ConstraintLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" 
+    xmlns:app="http://schemas.android.com/apk/res-auto" 
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_report_layout"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#000000">
+    tools:context=".ReportActivity"
+    android:background="?attr/colorBackground">
 
-    <!-- Top half: Calendar view -->
-    <LinearLayout
-        android:id="@+id/report_top_half"
-        android:layout_width="match_parent"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/reportTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/report_title"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="16dp"/>
+    
+    <!-- Some container or layout for the report details -->
+    <ScrollView
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
-        
+        app:layout_constraintTop_toBottomOf="@id/reportTitleText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
-            <Button
-                android:id="@+id/report_button_prev"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Prev"
-                android:textColor="#FFFF00"
-                android:background="@android:color/darker_gray"
-                android:layout_margin="8dp"/>
-            <TextView
-                android:id="@+id/report_month_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Month 1"
-                android:textColor="#FFFF00"
-                android:textSize="20sp"
-                android:padding="8dp"/>
-            <Button
-                android:id="@+id/report_button_next"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Next"
-                android:textColor="#FFFF00"
-                android:background="@android:color/darker_gray"
-                android:layout_margin="8dp"/>
-        </LinearLayout>
-        
-        <TableLayout
-            android:id="@+id/report_calendar_table"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:stretchColumns="*"/>
-    </LinearLayout>
+            android:orientation="vertical">
 
-    <!-- Bottom half: Things selection and Summarize button -->
-    <LinearLayout
-        android:id="@+id/report_bottom_half"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:padding="16dp">
-        
-        <Button
-            android:id="@+id/report_button_select_things"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Select Things"
-            android:textColor="#FFFF00"
-            android:background="@android:color/darker_gray"
-            android:layout_marginBottom="8dp"/>
-        
-        <TextView
-            android:id="@+id/report_selected_things"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:padding="8dp"/>
-        
-        <Button
-            android:id="@+id/report_button_summarize"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Summarize"
-            android:textColor="#FFFF00"
-            android:background="@android:color/darker_gray"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="16dp"/>
-    </LinearLayout>
-</LinearLayout>
+            <!-- Example card for summary data -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/reportCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="8dp"
+                android:layout_marginBottom="16dp">
+                
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvReportHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/report_header"/>
+                    
+                    <!-- More details here -->
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+            
+            <!-- Repeat or add more sections as needed -->
+        </LinearLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -19,4 +19,8 @@ android {
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
+    
+    // Try older versions of Material/ConstraintLayout that might already be cached
+    implementation 'com.google.android.material:material:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 }

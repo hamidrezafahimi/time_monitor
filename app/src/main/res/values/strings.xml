@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">MyApp7</string>
+    
+    <!-- Buttons -->
+    <string name="btn_report">View Report</string>
+    <string name="ok">OK</string>
+    <string name="save">Save</string>
+    <string name="close">Close</string>
+    <string name="add_field">Add Field</string>
+
+    <!-- Titles / headings -->
+    <string name="calendar_title">Calendar</string>
+    <string name="day_details">Day Details</string>
+    <string name="fields_title">Fields</string>
+    <string name="fields_report_title">Fields Report</string>
+    <string name="report_title">Report</string>
+    <string name="summary_title">Summary</string>
+    <string name="things_title">Things</string>
+    <string name="dialog_fields_title">Add/Edit Field</string>
+    <string name="dialog_statistics">Statistics</string>
+    
+    <!-- Hints & small text -->
+    <string name="field_name">Field Name</string>
+    <string name="field_example_hint">Example Field</string>
+    <string name="report_header">Here is your report summary.</string>
+    <string name="summary_details">Summary details will be shown here.</string>
 </resources>

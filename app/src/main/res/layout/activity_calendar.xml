@@ -1,61 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" 
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_calendar_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    android:background="#000000">
+    tools:context=".CalendarActivity"
+    android:background="?attr/colorBackground">
 
-    <!-- Month Label -->
-    <TextView
-        android:id="@+id/month_label"
+    <!-- Example TextView for a title -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/calendarTitleText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Month"
-        android:textColor="#FFFF00"
-        android:textSize="24sp"
-        android:layout_gravity="center_horizontal"
-        android:padding="8dp" />
+        android:text="@string/calendar_title"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"/>
 
-    <!-- Scrollable area for calendar table -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:fillViewport="true">
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fillViewport="true">
-            <TableLayout
-                android:id="@+id/calendar_table"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-            </TableLayout>
-        </HorizontalScrollView>
-    </ScrollView>
-
-    <!-- Navigation Buttons -->
-    <LinearLayout
-        android:layout_width="match_parent"
+    <!-- A RecyclerView or CalendarView goes here. We'll show a generic CalendarView. -->
+    <CalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
-        <Button
-            android:id="@+id/button_previous"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Previous"
-            android:textColor="#FFFF00"
-            android:background="@android:color/darker_gray"
-            android:layout_margin="8dp" />
-        <Button
-            android:id="@+id/button_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Next"
-            android:textColor="#FFFF00"
-            android:background="@android:color/darker_gray"
-            android:layout_margin="8dp" />
-    </LinearLayout>
-</LinearLayout>
+        app:layout_constraintTop_toBottomOf="@id/calendarTitleText"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="16dp"/>
+
+    <!-- Button to navigate or confirm selection -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCalendarConfirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ok"
+        style="@style/Widget.MaterialComponents.Button"
+        app:layout_constraintTop_toBottomOf="@id/calendarView"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
