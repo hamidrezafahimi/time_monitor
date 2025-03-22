@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Header showing Month and Day -->
+    <TextView
+        android:id="@+id/day_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFF00"
+        android:textSize="24sp"
+        android:layout_gravity="center_horizontal"
+        android:padding="8dp" />
+
+    <!-- Note input field -->
+    <EditText
+        android:id="@+id/note_field"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter note here"
+        android:textColor="#FFFF00"
+        android:textColorHint="#888888"
+        android:background="@android:color/darker_gray"
+        android:padding="8dp"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Save Button -->
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:textColor="#FFFF00"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="16dp"
+        android:layout_gravity="center_horizontal"/>
+</LinearLayout>

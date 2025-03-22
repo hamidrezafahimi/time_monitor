@@ -1,0 +1,6 @@
+<resources>
+    <style name="Theme.MyApp" parent="android:Theme.Holo">
+        <item name="android:windowBackground">#000000</item>
+        <item name="android:textColor">#FFFF00</item>
+    </style>
+</resources>
