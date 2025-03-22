@@ -1,0 +1,38 @@
+# DO NOT ignore these:
+!gradlew
+!gradlew.bat
+!gradle/wrapper/gradle-wrapper.properties
+
+# But ignore these if they're generated:
+.gradle/
+# === Gradle ===
+.gradle/
+build/
+*/build/
+
+# === APKs ===
+*.apk
+
+# === Local Properties ===
+local.properties
+
+# === Logs ===
+log.txt
+
+# === Wrapper Logs ===
+.gradle/
+gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties
+
+# === OS / Editor trash ===
+*.log
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# === IDEs (just in case) ===
+.idea/
+.vscode/
+

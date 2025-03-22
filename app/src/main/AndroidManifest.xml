@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.myapp4">
+
+    <!-- For older devices to write to external storage -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.MyApp">
+
+        <!-- Calendar Activity as launcher -->
+        <activity
+            android:name=".CalendarActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Day Activity (no intent-filter => not launcher) -->
+        <activity
+            android:name=".DayActivity"
+            android:exported="false" />
+
+        <!-- Old activities, if you want to keep them but not export them -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".GreetActivity"
+            android:exported="false" />
+
+    </application>
+</manifest>
