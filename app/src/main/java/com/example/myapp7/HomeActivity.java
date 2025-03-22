@@ -15,6 +15,7 @@ public class HomeActivity extends Activity {
         Button btnCalendar = findViewById(R.id.button_calendar);
         Button btnThings = findViewById(R.id.button_things);
         Button btnReport = findViewById(R.id.button_report);
+        Button btnFields = findViewById(R.id.button_fields); // New button
         
         btnCalendar.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, CalendarActivity.class);
@@ -26,6 +27,10 @@ public class HomeActivity extends Activity {
         });
         btnReport.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, ReportActivity.class);
+            startActivity(intent);
+        });
+        btnFields.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, FieldsActivity.class);
             startActivity(intent);
         });
     }

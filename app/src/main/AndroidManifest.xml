@@ -19,5 +19,8 @@
         <activity android:name=".ThingsActivity" android:exported="false" />
         <activity android:name=".ReportActivity" android:exported="false" />
         <activity android:name=".SummaryActivity" android:exported="false" />
+        <activity android:name=".FieldsActivity" android:exported="false" />
+        <activity android:name=".DayActivity" android:exported="false" />
+        <activity android:name=".FieldsReportActivity" android:exported="false" />
     </application>
 </manifest>

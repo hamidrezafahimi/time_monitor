@@ -2,6 +2,7 @@ package com.example.myapp7;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -14,9 +15,12 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.graphics.Color;
@@ -59,7 +63,8 @@ public class DayActivity extends Activity {
 
         containerThings = findViewById(R.id.container_things);
         noteField = findViewById(R.id.note_field);
-        Button saveButton = findViewById(R.id.button_save);
+        Button btnSaveNote = findViewById(R.id.button_save);
+        Button btnFields = findViewById(R.id.button_fields); // New "Fields" button in day page
 
         // Check external storage permissions.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -80,8 +85,8 @@ public class DayActivity extends Activity {
         // Load the list of things (for the Add/Off list) from things.txt.
         loadThingsList();
 
-        // Save button for the note field (writes to day_notes.txt).
-        saveButton.setOnClickListener(v -> {
+        // Save note button: writes to day_notes.txt.
+        btnSaveNote.setOnClickListener(v -> {
             String note = noteField.getText().toString().trim();
             if (note.isEmpty()) {
                 Toast.makeText(DayActivity.this, "Note cannot be empty", Toast.LENGTH_SHORT).show();
@@ -93,7 +98,7 @@ public class DayActivity extends Activity {
                 String appLabel = getApplicationInfo().loadLabel(getPackageManager()).toString();
                 File appFolder = new File(rootDir, appLabel);
                 if (!appFolder.exists() && !appFolder.mkdirs()) {
-                    Toast.makeText(DayActivity.this, "Could not create folder in external storage", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DayActivity.this, "Could not create folder", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 File dayNotesFile = new File(appFolder, "day_notes.txt");
@@ -106,9 +111,14 @@ public class DayActivity extends Activity {
                 Toast.makeText(DayActivity.this, "Error saving note: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+        
+        // Fields button opens the Fields dialog.
+        btnFields.setOnClickListener(v -> {
+            showFieldsDialog();
+        });
     }
 
-    // Computes the day-of-year (1 to 365) based on our custom month lengths.
+    // Computes day-of-year (1 to 365) based on custom month lengths.
     private int getDayOfYear() {
         int doy = 0;
         for (int i = 0; i < currentMonth - 1; i++) {
@@ -118,7 +128,7 @@ public class DayActivity extends Activity {
         return doy;
     }
 
-    // Loads things from things.txt and populates containerThings (Add/Off list).
+    // Loads things from things.txt and populates containerThings.
     private void loadThingsList() {
         containerThings.removeAllViews();
         List<String> things = getThingsList();
@@ -152,7 +162,7 @@ public class DayActivity extends Activity {
         return things;
     }
 
-    // Adds one row in containerThings for the given thing with "Add" and toggle "Off/On" buttons.
+    // Adds one row in containerThings for a given thing with "Add" and toggle "Off/On" buttons.
     private void addThingItem(String thingText) {
         LinearLayout itemLayout = new LinearLayout(this);
         itemLayout.setOrientation(LinearLayout.HORIZONTAL);
@@ -162,40 +172,40 @@ public class DayActivity extends Activity {
         thingView.setText(thingText);
         thingView.setTextColor(Color.WHITE);
         thingView.setTextSize(18);
-        LinearLayout.LayoutParams thingParams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
-        thingView.setLayoutParams(thingParams);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+        thingView.setLayoutParams(params);
 
-        Button addButton = new Button(this);
-        addButton.setText("Add");
-        addButton.setTextSize(14);
+        Button btnAdd = new Button(this);
+        btnAdd.setText("Add");
+        btnAdd.setTextSize(14);
 
-        Button offButton = new Button(this);
-        offButton.setText("Off");
-        offButton.setTextSize(14);
+        Button btnOff = new Button(this);
+        btnOff.setText("Off");
+        btnOff.setTextSize(14);
 
-        offButton.setOnClickListener(v -> {
-            if (offButton.getText().toString().equals("Off")) {
+        btnOff.setOnClickListener(v -> {
+            if (btnOff.getText().toString().equals("Off")) {
                 thingView.setAlpha(0.5f);
-                addButton.setEnabled(false);
-                offButton.setText("On");
+                btnAdd.setEnabled(false);
+                btnOff.setText("On");
             } else {
                 thingView.setAlpha(1.0f);
-                addButton.setEnabled(true);
-                offButton.setText("Off");
+                btnAdd.setEnabled(true);
+                btnOff.setText("Off");
             }
         });
 
-        addButton.setOnClickListener(v -> {
+        btnAdd.setOnClickListener(v -> {
             showStatisticsDialog(thingText);
         });
 
         itemLayout.addView(thingView);
-        itemLayout.addView(addButton);
-        itemLayout.addView(offButton);
+        itemLayout.addView(btnAdd);
+        itemLayout.addView(btnOff);
         containerThings.addView(itemLayout);
     }
 
-    // Reads the entire statistics database from statistics.txt as a 2D array.
+    // Reads the statistics database from statistics.txt as a 2D array.
     // The table has 365 rows and (# of things * 3) columns.
     private String[][] readStatisticsDatabase() {
         List<String[]> rows = new ArrayList<>();
@@ -279,8 +289,8 @@ public class DayActivity extends Activity {
     }
 
     // Retrieves the statistics for a given thing for the current day.
-    // Returns an array of 3 Integers (in minutes) or null if none are saved.
-    // If a cell is empty, that field is considered not set.
+    // Returns an array of 3 Integers (in minutes) or null if no record.
+    // Empty cells are considered not set (null).
     private Integer[] getStatisticsForThing(String thingText) {
         List<String> things = getThingsList();
         int thingIndex = things.indexOf(thingText);
@@ -314,6 +324,9 @@ public class DayActivity extends Activity {
         writeStatisticsDatabase(table);
     }
 
+    // Displays the statistics dialog for a given thing.
+    // If a record exists, spinners are pre-populated and disabled.
+    // Tapping "Change" clears the fields and enables editing.
     private void showStatisticsDialog(String thingText) {
         LayoutInflater inflater = LayoutInflater.from(this);
         View dialogView = inflater.inflate(R.layout.dialog_statistics, null);
@@ -351,7 +364,7 @@ public class DayActivity extends Activity {
         spinnerEndMinute.setAdapter(adapterMinutes);
         spinnerDurationMinute.setAdapter(adapterMinutes);
 
-        // Prepopulate spinners with saved record for current day if exists.
+        // Prepopulate spinners with saved record if exists.
         Integer[] stats = getStatisticsForThing(thingText);
         if (stats != null) {
             if (stats[0] != null) {
@@ -384,7 +397,7 @@ public class DayActivity extends Activity {
                 spinnerDurationHour.setSelection(0);
                 spinnerDurationMinute.setSelection(0);
             }
-            // Disable spinners so user cannot change until they tap "Change".
+            // Disable spinners initially.
             spinnerStartHour.setEnabled(false);
             spinnerStartMinute.setEnabled(false);
             spinnerEndHour.setEnabled(false);
@@ -392,7 +405,6 @@ public class DayActivity extends Activity {
             spinnerDurationHour.setEnabled(false);
             spinnerDurationMinute.setEnabled(false);
         } else {
-            // No saved record; leave all spinners at empty (selection 0) and enabled.
             spinnerStartHour.setSelection(0);
             spinnerStartMinute.setSelection(0);
             spinnerEndHour.setSelection(0);
@@ -401,15 +413,14 @@ public class DayActivity extends Activity {
             spinnerDurationMinute.setSelection(0);
         }
 
-        // Flags to mark whether each group is set (i.e. non-empty).
+        // Flags to track if a group is set.
         final boolean[] startSet = { !spinnerStartHour.getSelectedItem().toString().isEmpty() &&
-                                    !spinnerStartMinute.getSelectedItem().toString().isEmpty() };
+                                       !spinnerStartMinute.getSelectedItem().toString().isEmpty() };
         final boolean[] endSet = { !spinnerEndHour.getSelectedItem().toString().isEmpty() &&
-                                    !spinnerEndMinute.getSelectedItem().toString().isEmpty() };
+                                     !spinnerEndMinute.getSelectedItem().toString().isEmpty() };
         final boolean[] durationSet = { !spinnerDurationHour.getSelectedItem().toString().isEmpty() &&
                                         !spinnerDurationMinute.getSelectedItem().toString().isEmpty() };
 
-        // Helper to update flags.
         Runnable updateFlags = () -> {
             startSet[0] = !spinnerStartHour.getSelectedItem().toString().isEmpty()
                     && !spinnerStartMinute.getSelectedItem().toString().isEmpty();
@@ -419,7 +430,6 @@ public class DayActivity extends Activity {
                     && !spinnerDurationMinute.getSelectedItem().toString().isEmpty();
         };
 
-        // A helper to compute and update the missing group if exactly two groups are set.
         final Runnable updateComputed = new Runnable() {
             @Override
             public void run() {
@@ -466,7 +476,6 @@ public class DayActivity extends Activity {
             }
         };
 
-        // Set listeners on all spinners only if they are enabled.
         AdapterView.OnItemSelectedListener spinnerListener = new AdapterView.OnItemSelectedListener(){
             @Override public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 updateFlags.run();
@@ -482,7 +491,7 @@ public class DayActivity extends Activity {
         spinnerDurationHour.setOnItemSelectedListener(spinnerListener);
         spinnerDurationMinute.setOnItemSelectedListener(spinnerListener);
 
-        // "Change" button clears all fields and enables spinners for editing.
+        // "Change" button clears fields and enables editing.
         buttonChangeStats.setOnClickListener(v -> {
             spinnerStartHour.setSelection(0);
             spinnerStartMinute.setSelection(0);
@@ -490,7 +499,6 @@ public class DayActivity extends Activity {
             spinnerEndMinute.setSelection(0);
             spinnerDurationHour.setSelection(0);
             spinnerDurationMinute.setSelection(0);
-            // Enable all spinners.
             spinnerStartHour.setEnabled(true);
             spinnerStartMinute.setEnabled(true);
             spinnerEndHour.setEnabled(true);
@@ -536,7 +544,148 @@ public class DayActivity extends Activity {
         });
     }
 
+    private void showFieldsDialog() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        View dialogView = inflater.inflate(R.layout.dialog_fields, null);
+        LinearLayout container = dialogView.findViewById(R.id.dialog_fields_container);
+        Button btnSaveFields = dialogView.findViewById(R.id.btn_save_fields);
+        
+        // Load field names from fields.txt.
+        List<String> fields = getFieldsForFields();
+        // Attempt to load fields data for today.
+        String record = getFieldsDataForToday();
+        
+        final List<FieldEntry> fieldEntries = new ArrayList<>();
+        for (String field : fields) {
+            String value = "";
+            if (!record.isEmpty()) {
+                String[] lines = record.split("\n");
+                for (String line : lines) {
+                    if (line.startsWith(field + ":")) {
+                        value = line.substring((field + ":").length()).trim();
+                        break;
+                    }
+                }
+            }
+            LinearLayout row = new LinearLayout(this);
+            row.setOrientation(LinearLayout.HORIZONTAL);
+            TextView tvField = new TextView(this);
+            tvField.setText(field + ":");
+            tvField.setTextColor(Color.WHITE);
+            tvField.setTextSize(18);
+            EditText etValue = new EditText(this);
+            etValue.setHint("Enter value");
+            etValue.setText(value);
+            etValue.setTextColor(Color.YELLOW);
+            etValue.setBackgroundColor(Color.DKGRAY);
+            row.addView(tvField);
+            row.addView(etValue);
+            container.addView(row);
+            fieldEntries.add(new FieldEntry(field, etValue));
+        }
+        
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView);
+        builder.setTitle("Enter Fields Data");
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        
+        btnSaveFields.setOnClickListener(v -> {
+            StringBuilder sb = new StringBuilder();
+            sb.append("month").append(currentMonth).append("-day").append(currentDay).append("\n");
+            for (FieldEntry fe : fieldEntries) {
+                String val = fe.editText.getText().toString().trim();
+                sb.append(fe.fieldName).append(":").append(val).append("\n");
+            }
+            sb.append("---\n");
+            try {
+                File rootDir = Environment.getExternalStorageDirectory();
+                String appLabel = getApplicationInfo().loadLabel(getPackageManager()).toString();
+                File appFolder = new File(rootDir, appLabel);
+                if (!appFolder.exists() && !appFolder.mkdirs()) {
+                    Toast.makeText(DayActivity.this, "Could not create folder", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                File fieldsDataFile = new File(appFolder, "fieldsData.txt");
+                FileOutputStream fos = new FileOutputStream(fieldsDataFile, true);
+                fos.write(sb.toString().getBytes());
+                fos.close();
+                Toast.makeText(DayActivity.this, "Fields data saved.", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(DayActivity.this, "Error saving fields data: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
+    // Helper class for fields dialog.
+    private static class FieldEntry {
+        String fieldName;
+        EditText editText;
+        FieldEntry(String fieldName, EditText editText) {
+            this.fieldName = fieldName;
+            this.editText = editText;
+        }
+    }
+
+    // Reads fields.txt for use in the day page fields dialog.
+    private List<String> getFieldsForFields() {
+        List<String> list = new ArrayList<>();
+        try {
+            File rootDir = Environment.getExternalStorageDirectory();
+            String appLabel = getApplicationInfo().loadLabel(getPackageManager()).toString();
+            File appFolder = new File(rootDir, appLabel);
+            File fieldsFile = new File(appFolder, "fields.txt");
+            if (!fieldsFile.exists()) return list;
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fieldsFile)));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (!line.trim().isEmpty()) {
+                    list.add(line.trim());
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    // Reads fieldsData.txt and returns the record for today (if any), based on header "monthX-dayY".
+    private String getFieldsDataForToday() {
+        String targetHeader = "month" + currentMonth + "-day" + currentDay;
+        String record = "";
+        try {
+            File rootDir = Environment.getExternalStorageDirectory();
+            String appLabel = getApplicationInfo().loadLabel(getPackageManager()).toString();
+            File appFolder = new File(rootDir, appLabel);
+            File fieldsDataFile = new File(appFolder, "fieldsData.txt");
+            if (!fieldsDataFile.exists()) return "";
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fieldsDataFile)));
+            String line;
+            boolean found = false;
+            StringBuilder sb = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().equals(targetHeader)) {
+                    found = true;
+                    sb = new StringBuilder();
+                    sb.append(line).append("\n");
+                } else if (line.trim().equals("---") && found) {
+                    sb.append(line);
+                    record = sb.toString();
+                    found = false;
+                } else if (found) {
+                    sb.append(line).append("\n");
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return record;
+    }
+    
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == REQUEST_WRITE_STORAGE) {

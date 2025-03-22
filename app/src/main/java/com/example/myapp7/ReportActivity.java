@@ -29,7 +29,7 @@ public class ReportActivity extends Activity {
     private int currentMonth = 1; // initial month
     private TableLayout calendarTable;
     private TextView monthLabel;
-    private final int[] monthDays = {31,31,31,31,31,31,30,30,30,30,30,29};
+    private final int[] monthDays = {31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29};
     // Selected days (store day-of-year)
     private Integer selectedDate1 = null;
     private Integer selectedDate2 = null;
@@ -97,33 +97,36 @@ public class ReportActivity extends Activity {
         });
     }
     
+    // Draw calendar for currentMonth.
     private void drawCalendar() {
         monthLabel.setText("Month " + currentMonth);
         calendarTable.removeAllViews();
+        // Header row: day names.
         TableRow header = new TableRow(this);
         String[] dayNames = {"Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri"};
         for (String d : dayNames) {
             TextView tv = new TextView(this);
             tv.setText(d);
             tv.setTextColor(Color.YELLOW);
-            tv.setPadding(8,8,8,8);
+            tv.setPadding(8, 8, 8, 8);
             header.addView(tv);
         }
         calendarTable.addView(header);
         
-        int offset = 6;
+        // Compute offset.
+        int offset = 6; // Month 1 starts on Friday
         for (int m = 1; m < currentMonth; m++) {
-            offset = (offset + (monthDays[m-1] % 7)) % 7;
+            offset = (offset + (monthDays[m - 1] % 7)) % 7;
         }
         int days = monthDays[currentMonth - 1];
         int totalCells = offset + days;
-        int rows = (int)Math.ceil(totalCells / 7.0);
+        int rows = (int) Math.ceil(totalCells / 7.0);
         for (int i = 0; i < rows; i++) {
             TableRow row = new TableRow(this);
             for (int j = 0; j < 7; j++) {
-                int cellIndex = i*7 + j;
+                int cellIndex = i * 7 + j;
                 TextView tv = new TextView(this);
-                tv.setPadding(16,16,16,16);
+                tv.setPadding(16, 16, 16, 16);
                 tv.setTextColor(Color.WHITE);
                 if (cellIndex < offset || cellIndex >= offset + days) {
                     tv.setText("");
@@ -135,6 +138,7 @@ public class ReportActivity extends Activity {
                         onCalendarDayClicked(currentMonth, thisDay);
                     });
                     int doy = getDayOfYearForDate(currentMonth, day);
+                    // Use == for comparing primitives.
                     if ((selectedDate1 != null && doy == selectedDate1) ||
                         (selectedDate2 != null && doy == selectedDate2)) {
                         tv.setBackgroundColor(Color.RED);
@@ -148,6 +152,7 @@ public class ReportActivity extends Activity {
         }
     }
     
+    // Called when a calendar day is clicked.
     private void onCalendarDayClicked(int month, int day) {
         int doy = getDayOfYearForDate(month, day);
         if (selectedDate1 == null) {
@@ -157,6 +162,7 @@ public class ReportActivity extends Activity {
             selectedDate2 = doy;
             Toast.makeText(this, "Second day selected", Toast.LENGTH_SHORT).show();
         } else {
+            // Reset selection.
             selectedDate1 = doy;
             selectedDate2 = null;
             Toast.makeText(this, "Selection reset. First day selected", Toast.LENGTH_SHORT).show();
@@ -164,15 +170,17 @@ public class ReportActivity extends Activity {
         drawCalendar();
     }
     
+    // Helper: Compute day-of-year for a given month and day.
     private int getDayOfYearForDate(int month, int day) {
         int doy = 0;
         for (int m = 1; m < month; m++) {
-            doy += monthDays[m-1];
+            doy += monthDays[m - 1];
         }
         doy += day;
         return doy;
     }
     
+    // Load all things from things.txt.
     private void loadAllThings() {
         allThings = new ArrayList<>();
         try {
@@ -195,6 +203,7 @@ public class ReportActivity extends Activity {
         }
     }
     
+    // Show multi-choice dialog for selecting things.
     private void showThingsMultiChoiceDialog() {
         if (allThings == null) loadAllThings();
         selectedThingsFlags = new boolean[allThings.size()];
@@ -213,6 +222,7 @@ public class ReportActivity extends Activity {
         builder.create().show();
     }
     
+    // Updates the text view with the selected things.
     private void updateSelectedThingsText() {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < allThings.size(); i++) {
