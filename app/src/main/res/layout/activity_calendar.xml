@@ -1,47 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" 
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_calendar_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CalendarActivity"
-    android:background="?attr/colorBackground">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/white">
 
-    <!-- Example TextView for a title -->
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/calendarTitleText"
+    <TextView
+        android:id="@+id/month_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/calendar_title"
+        android:text="Month Label"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginBottom="8dp"/>
 
-    <!-- A RecyclerView or CalendarView goes here. We'll show a generic CalendarView. -->
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="0dp"
+    <TableLayout
+        android:id="@+id/calendar_table"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/calendarTitleText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"/>
+        android:stretchColumns="*"
+        android:layout_marginBottom="16dp" >
+        <!-- Rows, columns for days in the month, etc. -->
+    </TableLayout>
 
-    <!-- Button to navigate or confirm selection -->
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnCalendarConfirm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ok"
-        style="@style/Widget.MaterialComponents.Button"
-        app:layout_constraintTop_toBottomOf="@id/calendarView"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/button_previous"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Previous"
+            android:background="@drawable/bg_button"
+            android:textColor="@android:color/white"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/button_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:background="@drawable/bg_button"
+            android:textColor="@android:color/white"
+            android:layout_weight="1"/>
+    </LinearLayout>
+</LinearLayout>

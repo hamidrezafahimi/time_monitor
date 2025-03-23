@@ -4,38 +4,25 @@
     android:id="@+id/dialog_fields_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:elevation="4dp"
+    android:background="@drawable/bg_card"
     android:orientation="vertical"
-    android:padding="24dp"
-    android:background="@color/colorSurface">
+    android:padding="16dp">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/dialogFieldsTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/dialog_fields_title"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp"/>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/dialogField1InputLayout"
+    <LinearLayout
+        android:id="@+id/dialog_fields_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/field_example_hint">
+        android:orientation="vertical"
+        android:layout_marginBottom="8dp">
+        <!-- Items dynamically added here? -->
+    </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/dialogField1EditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/dialogFieldsButtonSave"
+    <Button
+        android:id="@+id/btn_save_fields"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/save"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_marginTop="16dp"
-        />
-
+        android:text="Save Fields"
+        android:background="@drawable/bg_button"
+        android:textColor="@android:color/white"/>
 </LinearLayout>

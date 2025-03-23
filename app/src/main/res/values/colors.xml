@@ -1,24 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Primary brand colors -->
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryVariant">#3700B3</color>
-    <color name="colorOnPrimary">#FFFFFF</color>
-    
-    <!-- Secondary brand colors -->
-    <color name="colorSecondary">#03DAC6</color>
-    <color name="colorSecondaryVariant">#018786</color>
-    <color name="colorOnSecondary">#000000</color>
-
-    <!-- Background and Surface -->
-    <color name="colorBackground">#FFFFFF</color>
-    <color name="colorSurface">#FFFFFF</color>
-    <color name="colorOnBackground">#000000</color>
-    <color name="colorOnSurface">#000000</color>
-
-    <!-- Additional neutrals or accent colors -->
-    <color name="colorAccent">#FF9800</color>
-    <color name="colorGrey">#9E9E9E</color>
-    <color name="colorLightGrey">#EEEEEE</color>
-    <color name="colorDarkGrey">#424242</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="cardBackground">#FFFFFF</color>
+    <color name="lightGray">#EEEEEE</color>
+    <color name="darkGray">#444444</color>
 </resources>

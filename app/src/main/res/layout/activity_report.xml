@@ -1,66 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout 
+<LinearLayout 
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" 
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_report_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ReportActivity"
-    android:background="?attr/colorBackground">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/white">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/reportTitleText"
+    <!-- Title -->
+    <TextView
+        android:id="@+id/report_month_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/report_title"
+        android:text="Month Label"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="16dp"/>
-    
-    <!-- Some container or layout for the report details -->
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/reportTitleText"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp">
+        android:layout_marginBottom="8dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+    <!-- TableLayout for calendar -->
+    <TableLayout
+        android:id="@+id/report_calendar_table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:stretchColumns="*"
+        android:layout_marginBottom="8dp" >
+        <!-- Add your rows/columns dynamically or in XML -->
+    </TableLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/report_button_prev"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:text="Prev"
+            android:background="@drawable/bg_button"
+            android:textColor="@android:color/white"
+            android:layout_weight="1"
+            android:layout_marginRight="4dp"/>
 
-            <!-- Example card for summary data -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/reportCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="8dp"
-                android:layout_marginBottom="16dp">
-                
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
+        <Button
+            android:id="@+id/report_button_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:background="@drawable/bg_button"
+            android:textColor="@android:color/white"
+            android:layout_weight="1"
+            android:layout_marginLeft="4dp"/>
+    </LinearLayout>
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/tvReportHeader"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/report_header"/>
-                    
-                    <!-- More details here -->
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
-            
-            <!-- Repeat or add more sections as needed -->
-        </LinearLayout>
-    </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- A button to select things -->
+    <Button
+        android:id="@+id/report_button_select_things"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Things"
+        android:background="@drawable/bg_button"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="16dp"/>
+
+    <!-- TextView showing selected things -->
+    <TextView
+        android:id="@+id/report_selected_things"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Selected Things..."
+        android:layout_marginTop="8dp"/>
+
+    <!-- Summarize button -->
+    <Button
+        android:id="@+id/report_button_summarize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Summarize"
+        android:background="@drawable/bg_button"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>

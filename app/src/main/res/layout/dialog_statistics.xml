@@ -1,34 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/dialog_statistics_layout"
+    android:id="@+id/dialog_stats_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="24dp"
-    android:background="@color/colorSurface">
+    android:elevation="4dp"
+    android:background="@drawable/bg_card"
+    android:padding="16dp">
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/dialogStatisticsTitle"
+    <Spinner
+        android:id="@+id/spinner_start_hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <!-- ... repeat for spinner_start_minute, spinner_end_hour, etc. -->
+
+    <Button
+        android:id="@+id/button_save_stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/dialog_statistics"
-        android:textStyle="bold"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp" />
+        android:text="Save Stats"
+        android:background="@drawable/bg_button"
+        android:textColor="@android:color/white"/>
 
-    <!-- Example text or chart about statistics -->
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/dialogStatisticsDetails"
+    <Button
+        android:id="@+id/button_change_stats"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Statistics details go here..."
-        android:layout_marginBottom="16dp"/>
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/dialogStatisticsButtonClose"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/close"
-        style="@style/Widget.MaterialComponents.Button"/>
+        android:text="Change Stats"
+        android:background="@drawable/bg_button"
+        android:textColor="@android:color/white"/>
 </LinearLayout>
